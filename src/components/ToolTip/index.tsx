@@ -32,7 +32,7 @@ const ToolTip = ({ tooltip, countryData, showToolTip }: IToolTip) => {
           ))
         }  
       </ol>
-    )
+    );
   }, [tooltip, variants]);
 
 

@@ -70,7 +70,8 @@ const Map = ({
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={() => onMouseEnter(countryName)}
               />
-          )})
+            );
+          })
         }
       </Geographies>
     </ComposableMap>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { ChangeEvent, Dispatch, SetStateAction, useCallback } from 'react';
 import { Slider, Select, MenuItem } from '@material-ui/core';
 import { Container } from './styles';
@@ -18,7 +17,7 @@ const Controls = ({ setSelectedDate, method, setMethod }: IControllers) => {
   const onSliderChange = useCallback((_: any, value: number | number[]) => {
     clearTimeout(debouncing);
     debouncing = setTimeout(() => {
-      setSelectedDate(DATES[+value])
+      setSelectedDate(DATES[+value]);
     }, 500);
   }, [setSelectedDate]);
 

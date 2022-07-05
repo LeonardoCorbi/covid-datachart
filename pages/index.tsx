@@ -1,5 +1,5 @@
-import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import type { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 
 import Map from '../src/components/Map';
 import Controls from '../src/components/Controls';
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const [countryData, setCountryData] = useState<ICountryData[]>([]);
   const [tooltip, setTooltip] = useState('');
   const [selectedDate, setSelectedDate] = useState(INITIAL_DATE);
-  const [method, setMethod] = useState<IFindByDate['method']>('partial')
+  const [method, setMethod] = useState<IFindByDate['method']>('partial');
   const [showToolTip, setShowToolTip] = useState(false);
 
   function sortAscending(a: IFindByDateDTO, b: IFindByDateDTO) {
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
             ?.filter(({ location }) => location === country)
             .sort(sortAscending);
           
-          let newCountry = {} as ICountryData;
+          const newCountry = {} as ICountryData;
 
           newCountry.name = country;
           newCountry.variants = {};
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
           setCountryData((prevState) => ([
             ...prevState.filter(({ name }) => name !== country),
             newCountry
-          ]))
+          ]));
         });
       } catch (err) {
         console.log('err', err);
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
         setShowToolTip={setShowToolTip}
       />
     </main>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

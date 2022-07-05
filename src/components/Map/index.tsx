@@ -1,23 +1,23 @@
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-import { ICountryData } from '../../../pages';
+import { ICountryData, IQueryParams } from '../../../pages';
 import { COLOR_RANGES, GEOGRAPHY } from '../../constants';
-import { IFindByDate } from '../../services/Cases/dtos/requests/findByDate.request';
+import { IFindByDate, MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
 
 interface IMap {
   tooltip: string;
   countryData: ICountryData[];
-  method: IFindByDate['method'];
+  method: MethodType;
   setTooltip: Dispatch<SetStateAction<string>>;
   setShowToolTip: Dispatch<SetStateAction<boolean>>;
 }
 
 const Map = ({
+  method,
   tooltip,
   setTooltip,
   countryData,
   setShowToolTip,
-  method
 }: IMap) => {
   const getCountryColor = useCallback((country: string) => {
     const countryVariants = countryData

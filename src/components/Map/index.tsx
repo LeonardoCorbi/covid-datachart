@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-import { ICountryData, IQueryParams } from '../../../pages';
+
+import { ICountryData } from '../../../pages';
 import { COLOR_RANGES, GEOGRAPHY } from '../../constants';
-import { IFindByDate, MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
+import {  MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
 
 interface IMap {
   tooltip: string;
@@ -43,7 +44,7 @@ const Map = ({
   }, [setShowToolTip]);
 
   return (
-    <ComposableMap>
+    <ComposableMap style={{ transform: 'translateX(-50px)' }}>
       <Geographies data-tip={tooltip} geography={GEOGRAPHY}>
         {
           ({ geographies }) => geographies.map((geo) => {

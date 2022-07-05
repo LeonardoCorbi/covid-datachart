@@ -10,7 +10,7 @@ import { CasesServices } from '../src/services/Cases/CasesServices';
 import { IFindByDateDTO } from '../src/services/Cases/dtos/responses/findByDate.response';
 
 import { COUNTRIES } from '../src/constants';
-import { IFindByDate, MethodType } from '../src/services/Cases/dtos/requests/findByDate.request';
+import { MethodType } from '../src/services/Cases/dtos/requests/findByDate.request';
 import { GenericObject } from '../src/types';
 
 export interface ICountryData {
@@ -98,15 +98,11 @@ const Home: NextPage = () => {
   }, [INITIAL_DATA]);
 
 
-  useEffect(() => {
-    getData();
-  }, [selectedDate, method]);
+  useEffect(() => { getData(); }, [selectedDate, method]);
 
   useEffect(() => {
     const hasValues = Object.values(INITIAL_DATA);
-    if (!hasValues?.length || hasInitialized.current) {
-      return;
-    }
+    if (!hasValues?.length || hasInitialized.current) return;
     hasInitialized.current = true;
 
     setSelectedDate(INITIAL_DATA.date);

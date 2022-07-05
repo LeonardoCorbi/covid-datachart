@@ -1,10 +1,20 @@
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  useMemo,
+  useState,
+  Dispatch,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  SetStateAction,
+} from 'react';
+
 import { Slider, Select, MenuItem } from '@material-ui/core';
-import { Button, Container } from './styles';
+
 import { DATES } from '../../constants';
+import { Button, Container } from './styles';
+import { IQueryParams } from '../../../pages';
 import { toBrazilDate } from '../../utils/date';
 import { MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
-import { IQueryParams } from '../../../pages';
 
 interface IControllers {
   method: string;
@@ -35,8 +45,10 @@ const Controls = ({
     value: number | number[]
   ) => {
     const date = DATES[+value];
+
     setSliderPosition(+value);
     clearTimeout(debouncing);
+
     debouncing = setTimeout(() => {
       setSelectedDate(date);
       updateQuery({ date });
@@ -77,9 +89,9 @@ const Controls = ({
         <article>
           <Slider
             min={0}
+            valueLabelDisplay="on"
             value={sliderPosition}
             max={DATE_INDEX_LENGTH}
-            valueLabelDisplay="on"
             onChange={onSliderChange}
             valueLabelFormat={(value) => toBrazilDate(DATES[value])}
           />
@@ -99,8 +111,8 @@ const Controls = ({
           <label htmlFor="methodSelector">Modo de visualização:</label>
           <Select
             value={method}
-            defaultValue="partial"
             id="methodSelector"
+            defaultValue="partial"
             onChange={onSelectChange}
           >
             <MenuItem value="partial">Parcial</MenuItem>

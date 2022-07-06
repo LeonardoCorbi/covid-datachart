@@ -46,7 +46,7 @@ const Map = ({
   }, [setShowToolTip]);
 
   return (
-    <ComposableMap style={{ transform: 'translateX(-4%)' }} data-test-id="mapContainer">
+    <ComposableMap style={{ transform: 'translateX(-4%)' }} data-testid="mapContainer">
       <Geographies data-tip={tooltip} geography={geo}>
         {
           ({ geographies }) => geographies.map((geo) => {
@@ -70,7 +70,7 @@ const Map = ({
                 strokeWidth={.15}
                 data-tip={tooltip}
                 style={countryStyle}
-                data-test-id="country"
+                data-testid="country"
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={() => onMouseEnter(countryName)}
               />

@@ -14,7 +14,7 @@ import { IQueryParams } from '../../../pages';
 import { toBrazilDate } from '../../utils/date';
 import { MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
 
-interface IControllers {
+export interface IControls {
   method: string;
   updateQuery: ({ date, method: type }: Partial<IQueryParams>) => void
   selectedDate: string;
@@ -28,7 +28,7 @@ const Controls = ({
   updateQuery,
   selectedDate,
   setSelectedDate,
-}: IControllers) => {
+}: IControls) => {
   let debouncing: NodeJS.Timeout;
 
   const initialIndex = useMemo(() => DATES.findIndex((date) => date === selectedDate), [selectedDate]);
@@ -87,7 +87,7 @@ const Controls = ({
         <article>
           <Slider
             min={0}
-            data-test-id="slider"
+            data-testid="slider"
             valueLabelDisplay="on"
             value={sliderPosition}
             max={DATE_INDEX_LENGTH}
@@ -111,7 +111,7 @@ const Controls = ({
           <Select
             value={method}
             id="methodSelector"
-            data-test-id="select"
+            data-testid="methodSelector"
             defaultValue="partial"
             onChange={onSelectChange}
           >
@@ -124,7 +124,7 @@ const Controls = ({
           <Button
             type="button"
             id="playButton"
-            data-test-id="select"
+            data-testid="playButton"
             onClick={onPlayClick}
           >
             {isPlayed ? 'Pause' : 'Play'}

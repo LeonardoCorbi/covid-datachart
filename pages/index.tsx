@@ -47,6 +47,22 @@ const Home: NextPage = () => {
     return 0;
   }
 
+  const handleChangeTooltip = useCallback((value: string) => {
+    setTooltip(value);
+  }, []);
+
+  const handleChangeSelectedDate = useCallback((value: string) => {
+    setSelectedDate(value);
+  }, []);
+
+  const handleChangeMethod = useCallback((value: MethodType) => {
+    setMethod(value);
+  }, []);
+
+  const handleChangeShowToolTip = useCallback((value: boolean) => {
+    setShowToolTip(value);
+  }, []);
+
   const updateQuery = useCallback((payload: Partial<IQueryParams>) => {
     push({ query: {
       ...INITIAL_DATA,
@@ -127,17 +143,17 @@ const Home: NextPage = () => {
         />
         <Controls
           method={method}
-          setMethod={setMethod}
+          setMethod={handleChangeMethod}
           updateQuery={updateQuery}
           selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
+          setSelectedDate={handleChangeSelectedDate}
         />
         <Map
           method={method}
           tooltip={tooltip}
-          setTooltip={setTooltip}
+          setTooltip={handleChangeTooltip}
           countryData={countryData}
-          setShowToolTip={setShowToolTip}
+          setShowToolTip={handleChangeShowToolTip}
         />
         <GlobalStyles />
       </Container>

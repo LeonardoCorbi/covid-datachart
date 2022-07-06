@@ -1,11 +1,9 @@
 import {
   useMemo,
   useState,
-  Dispatch,
   useEffect,
   useCallback,
   ChangeEvent,
-  SetStateAction,
 } from 'react';
 
 import { Slider, Select, MenuItem } from '@material-ui/core';
@@ -18,10 +16,10 @@ import { MethodType } from '../../services/Cases/dtos/requests/findByDate.reques
 
 interface IControllers {
   method: string;
-  selectedDate: string;
-  setSelectedDate: Dispatch<SetStateAction<string>>;
-  setMethod: Dispatch<SetStateAction<MethodType>>;
   updateQuery: ({ date, method: type }: Partial<IQueryParams>) => void
+  selectedDate: string;
+  setMethod: (value: MethodType) => void;
+  setSelectedDate: (value: string) => void;
 }
 
 const Controls = ({

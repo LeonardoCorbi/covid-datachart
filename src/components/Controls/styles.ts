@@ -59,14 +59,16 @@ export const Container = styled.form`
       position: relative;
     }
     
-    [class*=PrivateValueLabel-circle] {
+    [class*=PrivateValueLabel-circle],
+    [class*=jss4] {
       transform: translateX(-24px);
       width: max-content;
       padding: 0 8px;
       border-radius: 4px;
     }
   
-    [class*=PrivateValueLabel-label] {
+    [class*=PrivateValueLabel-label],
+    [class*=jss5] {
       transform: rotate(0deg)
     }    
   }

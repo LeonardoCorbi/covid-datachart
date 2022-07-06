@@ -1,4 +1,6 @@
 export interface IFindByDate {
   date: string;
-  method: 'partial' | 'total'
+  method: MethodType;
 }
+
+export type MethodType = 'partial' | 'total';

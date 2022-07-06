@@ -2,24 +2,56 @@ import styled from 'styled-components';
 
 export const Container = styled.form`
   width: 100%;
-  
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 32px;
-
-  margin-top: 40px;
+  flex-wrap: wrap;
+  margin-top: 28px;
 
   section {
     &:first-child {
-      width: 70%;
+      width: 50%;
+
+      @media(max-width: 845px){
+        width: 90%;
+      }
+
+      article:first-child {
+        min-width: 80%;
+        display: flex;
+        justify-content: space-between;
+        font-family: sans-serif;
+      }
+
+      article:nth-child(2) {
+        ul {
+          min-width: 80%;
+          display: flex;
+          justify-content: space-between;
+          font-family: sans-serif;
+          list-style: none;
+          padding: 0;
+        }
+      }
     }
 
     &:nth-child(2) {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      gap: 16px;
       font-family: sans-serif;
+
+      article {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        @media(max-width: 460px){
+          label {
+            font-size: 14px;
+          }
+        }
+      }
     }  
 
     input[type="range"] {
@@ -36,20 +68,16 @@ export const Container = styled.form`
   
     [class*=PrivateValueLabel-label] {
       transform: rotate(0deg)
-    }
-  
-    article:first-child {
-      min-width: 80%;
-      display: flex;
-      justify-content: space-between;
-      font-family: sans-serif;
-    }
-  
-    article:nth-child(2) {
-      min-width: 80%;
-      display: flex;
-      justify-content: space-between;
-      font-family: sans-serif;
-    }
+    }    
   }
+`;
+
+export const Button = styled.button`
+  background-color: #364BA8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0 8px;
+  height: 32px;
+  cursor: pointer;
 `;

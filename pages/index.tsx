@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Map from '../src/components/Map';
 import Controls from '../src/components/Controls';
@@ -8,22 +10,31 @@ import ToolTip from '../src/components/ToolTip';
 import { CasesServices } from '../src/services/Cases/CasesServices';
 import { IFindByDateDTO } from '../src/services/Cases/dtos/responses/findByDate.response';
 
-import { COUNTRIES, DATES } from '../src/constants';
-import { IFindByDate } from '../src/services/Cases/dtos/requests/findByDate.request';
+import { COUNTRIES } from '../src/constants';
+import { MethodType } from '../src/services/Cases/dtos/requests/findByDate.request';
 import { GenericObject } from '../src/types';
+import { Container, GlobalStyles } from '../src/styles';
 
 export interface ICountryData {
   name: string;
   variants: GenericObject<number>;
 }
 
+export interface IQueryParams {
+  date: string;
+  method: MethodType;
+}
+
 const Home: NextPage = () => {
-  const [INITIAL_DATE] = DATES;
+  const { query, push } = useRouter();
+  const INITIAL_DATA = query as unknown as IQueryParams;
+
+  const hasInitialized = useRef(false);
 
   const [countryData, setCountryData] = useState<ICountryData[]>([]);
   const [tooltip, setTooltip] = useState('');
-  const [selectedDate, setSelectedDate] = useState(INITIAL_DATE);
-  const [method, setMethod] = useState<IFindByDate['method']>('partial');
+  const [selectedDate, setSelectedDate] = useState(INITIAL_DATA.date);
+  const [method, setMethod] = useState<MethodType>('partial');
   const [showToolTip, setShowToolTip] = useState(false);
 
   function sortAscending(a: IFindByDateDTO, b: IFindByDateDTO) {
@@ -36,24 +47,32 @@ const Home: NextPage = () => {
     return 0;
   }
 
+  const updateQuery = useCallback((payload: Partial<IQueryParams>) => {
+    push({ query: {
+      ...INITIAL_DATA,
+      ...payload,
+    } });
+  }, [INITIAL_DATA]);
+
+
   useEffect(() => {
-    async function getData() {
+    const getData = async () => {
       try {
         const { data } = await CasesServices.findByDate({
           method,
           date: selectedDate,
         });
-
+  
         COUNTRIES.forEach((country) => {
           const casesPerCountry = data
             ?.filter(({ location }) => location === country)
             .sort(sortAscending);
           
           const newCountry = {} as ICountryData;
-
+  
           newCountry.name = country;
           newCountry.variants = {};
-
+  
           if (casesPerCountry) {
             casesPerCountry?.forEach(({ variant, num_sequences }) => {
               if (method === 'total' && newCountry.variants[variant]) {
@@ -71,7 +90,7 @@ const Home: NextPage = () => {
           } else {
             newCountry.variants = {};
           }
-
+  
           setCountryData((prevState) => ([
             ...prevState.filter(({ name }) => name !== country),
             newCountry
@@ -80,31 +99,49 @@ const Home: NextPage = () => {
       } catch (err) {
         console.log('err', err);
       }
-    }
+    };
 
     getData();
   }, [selectedDate, method]);
 
+  useEffect(() => {
+    const hasValues = Object.values(INITIAL_DATA);
+    if (!hasValues?.length || hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    setSelectedDate(INITIAL_DATA.date);
+    setMethod(INITIAL_DATA.method || 'partial');
+  }, [INITIAL_DATA]);
+
   return (
-    <main>
-      <ToolTip
-        tooltip={tooltip}
-        countryData={countryData}
-        showToolTip={showToolTip}
-      />
-      <Controls
-        method={method}
-        setMethod={setMethod}
-        setSelectedDate={setSelectedDate}
-      />
-      <Map
-        method={method}
-        tooltip={tooltip}
-        setTooltip={setTooltip}
-        countryData={countryData}
-        setShowToolTip={setShowToolTip}
-      />
-    </main>
+    <>
+      <Helmet>
+        <title>Covid Data Chart</title>
+      </Helmet>
+      <Container>
+        <h1>Casos de infecções por covid-19</h1>
+        <ToolTip
+          tooltip={tooltip}
+          countryData={countryData}
+          showToolTip={showToolTip}
+        />
+        <Controls
+          method={method}
+          setMethod={setMethod}
+          updateQuery={updateQuery}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+        <Map
+          method={method}
+          tooltip={tooltip}
+          setTooltip={setTooltip}
+          countryData={countryData}
+          setShowToolTip={setShowToolTip}
+        />
+        <GlobalStyles />
+      </Container>
+    </>
   );
 };
 

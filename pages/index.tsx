@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Map from '../src/components/Map';
 import Controls from '../src/components/Controls';
@@ -12,6 +13,7 @@ import { IFindByDateDTO } from '../src/services/Cases/dtos/responses/findByDate.
 import { COUNTRIES } from '../src/constants';
 import { MethodType } from '../src/services/Cases/dtos/requests/findByDate.request';
 import { GenericObject } from '../src/types';
+import { Container, GlobalStyles } from '../src/styles';
 
 export interface ICountryData {
   name: string;
@@ -45,51 +47,6 @@ const Home: NextPage = () => {
     return 0;
   }
 
-  const getData = async () => {
-    try {
-      const { data } = await CasesServices.findByDate({
-        method,
-        date: selectedDate,
-      });
-
-      COUNTRIES.forEach((country) => {
-        const casesPerCountry = data
-          ?.filter(({ location }) => location === country)
-          .sort(sortAscending);
-        
-        const newCountry = {} as ICountryData;
-
-        newCountry.name = country;
-        newCountry.variants = {};
-
-        if (casesPerCountry) {
-          casesPerCountry?.forEach(({ variant, num_sequences }) => {
-            if (method === 'total' && newCountry.variants[variant]) {
-              newCountry.variants = {
-                ...newCountry.variants,
-                [variant]: +num_sequences + +newCountry.variants[variant]
-              };
-            } else {
-              newCountry.variants = {
-                ...newCountry.variants,
-                [variant]: +num_sequences
-              };
-            }
-          });
-        } else {
-          newCountry.variants = {};
-        }
-
-        setCountryData((prevState) => ([
-          ...prevState.filter(({ name }) => name !== country),
-          newCountry
-        ]));
-      });
-    } catch (err) {
-      console.log('err', err);
-    }
-  };
-
   const updateQuery = useCallback((payload: Partial<IQueryParams>) => {
     push({ query: {
       ...INITIAL_DATA,
@@ -98,7 +55,54 @@ const Home: NextPage = () => {
   }, [INITIAL_DATA]);
 
 
-  useEffect(() => { getData(); }, [selectedDate, method]);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const { data } = await CasesServices.findByDate({
+          method,
+          date: selectedDate,
+        });
+  
+        COUNTRIES.forEach((country) => {
+          const casesPerCountry = data
+            ?.filter(({ location }) => location === country)
+            .sort(sortAscending);
+          
+          const newCountry = {} as ICountryData;
+  
+          newCountry.name = country;
+          newCountry.variants = {};
+  
+          if (casesPerCountry) {
+            casesPerCountry?.forEach(({ variant, num_sequences }) => {
+              if (method === 'total' && newCountry.variants[variant]) {
+                newCountry.variants = {
+                  ...newCountry.variants,
+                  [variant]: +num_sequences + +newCountry.variants[variant]
+                };
+              } else {
+                newCountry.variants = {
+                  ...newCountry.variants,
+                  [variant]: +num_sequences
+                };
+              }
+            });
+          } else {
+            newCountry.variants = {};
+          }
+  
+          setCountryData((prevState) => ([
+            ...prevState.filter(({ name }) => name !== country),
+            newCountry
+          ]));
+        });
+      } catch (err) {
+        console.log('err', err);
+      }
+    };
+
+    getData();
+  }, [selectedDate, method]);
 
   useEffect(() => {
     const hasValues = Object.values(INITIAL_DATA);
@@ -110,27 +114,34 @@ const Home: NextPage = () => {
   }, [INITIAL_DATA]);
 
   return (
-    <main>
-      <ToolTip
-        tooltip={tooltip}
-        countryData={countryData}
-        showToolTip={showToolTip}
-      />
-      <Controls
-        method={method}
-        setMethod={setMethod}
-        updateQuery={updateQuery}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-      />
-      <Map
-        method={method}
-        tooltip={tooltip}
-        setTooltip={setTooltip}
-        countryData={countryData}
-        setShowToolTip={setShowToolTip}
-      />
-    </main>
+    <>
+      <Helmet>
+        <title>Covid Data Chart</title>
+      </Helmet>
+      <Container>
+        <h1>Casos de infecções por covid-19</h1>
+        <ToolTip
+          tooltip={tooltip}
+          countryData={countryData}
+          showToolTip={showToolTip}
+        />
+        <Controls
+          method={method}
+          setMethod={setMethod}
+          updateQuery={updateQuery}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+        <Map
+          method={method}
+          tooltip={tooltip}
+          setTooltip={setTooltip}
+          countryData={countryData}
+          setShowToolTip={setShowToolTip}
+        />
+        <GlobalStyles />
+      </Container>
+    </>
   );
 };
 

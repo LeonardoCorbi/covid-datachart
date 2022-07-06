@@ -89,6 +89,7 @@ const Controls = ({
         <article>
           <Slider
             min={0}
+            data-test-id="slider"
             valueLabelDisplay="on"
             value={sliderPosition}
             max={DATE_INDEX_LENGTH}
@@ -112,6 +113,7 @@ const Controls = ({
           <Select
             value={method}
             id="methodSelector"
+            data-test-id="select"
             defaultValue="partial"
             onChange={onSelectChange}
           >
@@ -121,7 +123,14 @@ const Controls = ({
         </article>
         <article>
           <label htmlFor="playButton">Simular passagem de tempo:</label>
-          <Button onClick={onPlayClick} id="playButton" type="button">{isPlayed ? 'Pause' : 'Play'}</Button>
+          <Button
+            type="button"
+            id="playButton"
+            data-test-id="select"
+            onClick={onPlayClick}
+          >
+            {isPlayed ? 'Pause' : 'Play'}
+          </Button>
         </article>
       </section>
     </Container>

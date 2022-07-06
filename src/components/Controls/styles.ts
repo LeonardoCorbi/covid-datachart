@@ -7,7 +7,7 @@ export const Container = styled.form`
   align-items: center;
   gap: 32px;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin-top: 28px;
 
   section {
     &:first-child {
@@ -68,9 +68,7 @@ export const Container = styled.form`
   
     [class*=PrivateValueLabel-label] {
       transform: rotate(0deg)
-    }
-  
-    
+    }    
   }
 `;
 

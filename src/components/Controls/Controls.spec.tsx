@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import Controls, { IControls } from '.';
 
 const component = ({
@@ -20,6 +21,9 @@ const component = ({
 describe('Control component', () => {
   it('should render correctly', () => {
     const { getByTestId } = render(component({}));
+
+    const tree = renderer.create(component({})).toJSON();
+    expect(tree).toMatchSnapshot();
 
     const slider = getByTestId('slider');
     const select = getByTestId('methodSelector');

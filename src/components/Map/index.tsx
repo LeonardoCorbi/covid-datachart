@@ -1,16 +1,18 @@
-import { Dispatch, SetStateAction, useCallback } from 'react';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { useCallback } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 
 import { ICountryData } from '../../../pages';
-import { COLOR_RANGES, GEOGRAPHY } from '../../constants';
-import {  MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
+import { COLOR_RANGES } from '../../constants';
+import { MethodType } from '../../services/Cases/dtos/requests/findByDate.request';
+import geo from './world-110m.json';
 
 interface IMap {
+  method: MethodType;
   tooltip: string;
   countryData: ICountryData[];
-  method: MethodType;
-  setTooltip: Dispatch<SetStateAction<string>>;
-  setShowToolTip: Dispatch<SetStateAction<boolean>>;
+  setTooltip: (value: string) => void;
+  setShowToolTip: (value: boolean) => void;
 }
 
 const Map = ({
@@ -45,7 +47,7 @@ const Map = ({
 
   return (
     <ComposableMap style={{ transform: 'translateX(-4%)' }} data-test-id="mapContainer">
-      <Geographies data-tip={tooltip} geography={GEOGRAPHY}>
+      <Geographies data-tip={tooltip} geography={geo}>
         {
           ({ geographies }) => geographies.map((geo) => {
             const countryName = geo.properties.NAME_LONG;

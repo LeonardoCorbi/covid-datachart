@@ -149,8 +149,6 @@ export const VARIANTS = [
   'others'
 ];
 
-export const GEOGRAPHY = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
-
 export const DATES = [
   '2020-05-11',
   '2020-05-25',

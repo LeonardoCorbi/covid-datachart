@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Map component should render correctly 1`] = `
+<svg
+  className="rsm-svg "
+  data-testid="mapContainer"
+  style={
+    Object {
+      "transform": "translateX(-4%)",
+    }
+  }
+  viewBox="0 0 800 600"
+>
+  <g
+    className="rsm-geographies "
+    data-tip="Teste"
+  />
+</svg>
+`;

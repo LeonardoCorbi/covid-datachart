@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Control component should render correctly 1`] = `
+<form
+  className="styles__Container-sc-1n80o5l-0 kBQGVK"
+>
+  <section>
+    <article>
+      <span
+        className="MuiSlider-root MuiSlider-colorPrimary"
+        data-testid="slider"
+        onMouseDown={[Function]}
+      >
+        <span
+          className="MuiSlider-rail"
+        />
+        <span
+          className="MuiSlider-track"
+          style={
+            Object {
+              "left": "0%",
+              "width": "0%",
+            }
+          }
+        />
+        <input
+          type="hidden"
+          value="0"
+        />
+        <span
+          aria-orientation="horizontal"
+          aria-valuemax={44}
+          aria-valuemin={0}
+          aria-valuenow={0}
+          className="MuiSlider-thumb MuiSlider-thumbColorPrimary PrivateValueLabel-open-2 PrivateValueLabel-thumb-1"
+          data-index={0}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+            }
+          }
+          tabIndex={0}
+        >
+          <span
+            className="PrivateValueLabel-offset-3 MuiSlider-valueLabel"
+          >
+            <span
+              className="PrivateValueLabel-circle-4"
+            >
+              <span
+                className="PrivateValueLabel-label-5"
+              >
+                11/05/2020
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </article>
+    <article>
+      <ul>
+        <li>
+          mai/2020
+        </li>
+        <li>
+          out/2020
+        </li>
+        <li>
+          mar/2021
+        </li>
+        <li>
+          jul/2021
+        </li>
+        <li>
+          jan/2022
+        </li>
+      </ul>
+    </article>
+  </section>
+  <section>
+    <article>
+      <label
+        htmlFor="methodSelector"
+      >
+        Modo de visualização:
+      </label>
+      <div
+        className="MuiInputBase-root MuiInput-root MuiInput-underline"
+        data-testid="methodSelector"
+        onClick={[Function]}
+      >
+        <div
+          aria-haspopup="listbox"
+          aria-labelledby="methodSelector"
+          className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+          id="methodSelector"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          Parcial
+        </div>
+        <input
+          aria-hidden={true}
+          className="MuiSelect-nativeInput"
+          onAnimationStart={[Function]}
+          onChange={[Function]}
+          tabIndex={-1}
+          value="partial"
+        />
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSelect-icon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+      </div>
+    </article>
+    <article>
+      <label
+        htmlFor="playButton"
+      >
+        Simular passagem de tempo:
+      </label>
+      <button
+        className="styles__Button-sc-1n80o5l-1 ksEoZe"
+        data-testid="playButton"
+        id="playButton"
+        onClick={[Function]}
+        type="button"
+      >
+        Play
+      </button>
+    </article>
+  </section>
+</form>
+`;
